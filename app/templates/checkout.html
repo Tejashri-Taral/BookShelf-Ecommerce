@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout</title>
+</head>
+<body>
+    <h1>Your Cart</h1>
+    <table>
+        <tr>
+            <th>Book Name</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Action</th>
+        </tr>
+        {% set total_price = 0 %}
+        {% for item in cart_items %}
+        <tr>
+            <td>{{ item.name }}</td>
+            <td>${{ item.price }}</td>
+            <td>{{ item.quantity }}</td>
+            <td><a href="{{ url_for('remove_from_cart_route', book_id=item.book_id) }}">Remove from Cart</a></td>
+        </tr>
+        {% set total_price = total_price + (item.price * item.quantity) %}
+        {% endfor %}
+    </table>
+
+    <h2>Total: ${{ total_price }}</h2>
+
+    <a href="{{ url_for('checkout_route') }}">Proceed to Checkout</a>
+</body>
+</html>

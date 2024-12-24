@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bookstore</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        /* General Body Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+/* Global Container */
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Header Styling */
+header {
+    /* background-color: #2C3E50; */
+    background-color: #2C3E50;
+    color: #fff;
+    padding: 30px 0;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+header h1 {
+    font-size: 2.5em;
+    margin: 0;
+}
+
+/* Navigation Bar Styling */
+header nav {
+    margin-top: 20px;
+}
+
+header nav a {
+    color: #fff;
+    margin: 0 20px;
+    text-decoration: none;
+    font-size: 1.1em;
+    padding: 12px 20px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+header nav a:hover {
+    background-color: #1ABC9C;
+    transform: translateY(-3px);
+}
+
+/* Book List Container */
+.book-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+}
+
+.book-card {
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 300px; 
+    padding: 15px; 
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.book-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+.book-card h3 {
+    font-size: 1.45rem; 
+    margin-bottom: 8px; 
+    color: #2C3E50;
+}
+
+
+.book-card p {
+    font-size: 1.2rem; 
+    margin-bottom: 8px; 
+    color: #7f8c8d;
+}
+
+/* add to cart */
+.book-card a {
+    padding: 8px 16px;
+    font-size: 1.2rem;
+    background-color: #28a745;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.book-card a:hover {
+    background-color: #146927;
+    transform: translateY(-2px);
+}
+
+.book-card img {
+    width: 100%;
+    height: auto; 
+    max-height: 200px;
+    border-radius: 4px;
+    object-fit: contain; 
+    margin-bottom: 10px;
+    background-color: #f0f0f0; 
+}
+/* Cart Items Container */
+.cart-items {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Cart Item Styling */
+.cart-items ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.cart-items li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    border-bottom: 1px solid #ddd;
+    transition: background-color 0.3s ease;
+}
+
+.cart-items li:last-child {
+    border-bottom: none;
+}
+
+.cart-items li:hover {
+    background-color: #f8f9fa;
+}
+
+
+/* Cart Item Details */
+.cart-items li img {
+    width: 50px;
+    height: 50px;
+    border-radius: 4px;
+    object-fit: cover;
+    margin-right: 15px;
+}
+
+.cart-items li span {
+    flex: 1;
+    font-size: 1rem;
+    color: #333;
+}
+
+/* Remove Button */
+.cart-items li a {
+    padding: 8px 12px;
+    background-color: #dc3545;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.cart-items li a:hover {
+    background-color: #c82333;
+    transform: translateY(-2px);
+}
+
+/* Checkout Button */
+.cart-items a[href*="checkout"] {
+    display: block;
+    margin: 20px auto;
+    width: fit-content;
+    padding: 12px 20px;
+    background-color: #007bff;
+    color: white;
+    text-align: center;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.cart-items a[href*="checkout"]:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+}
+
+footer {
+    background-color: #2C3E50;
+    color: #fff;
+    text-align: center;
+    padding: 20px 0;
+    margin-top: 40px;
+}
+
+footer p {
+    margin: 0;
+    font-size: 1.1em;
+}
+
+.footer-social {
+    text-align: center;
+    padding: 10px;
+    border-radius: 10px;
+    margin: 20px auto;
+    max-width: 500px;
+}
+
+.footer-social h3 {
+    font-size: 1em;
+    color: #ffffff;
+    margin-bottom: 15px;
+}
+
+.social-icons a {
+    font-size: 1.5em;
+    color: #ffffff;
+    margin: 0 15px;
+    text-decoration: none;
+    transition: color 0.3s ease, transform 0.2s ease;
+}
+
+.social-icons a:hover {
+    color: #007bff;
+    transform: scale(1.1);
+}
+
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .book-list {
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    }
+
+    header h1 {
+        font-size: 2.2em;
+    }
+}
+
+@media (max-width: 768px) {
+    .book-list {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+    header nav a {
+        font-size: 1em;
+    }
+
+    .book-card {
+        height: auto;
+    }
+}
+
+@media (max-width: 480px) {
+    header nav a {
+        font-size: 0.9em;
+        padding: 8px 12px;
+    }
+
+    .book-card {
+        width: 100%;
+        padding: 15px;
+    }
+
+    footer p {
+        font-size: 1em;
+    }
+}
+
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Welcome to the BookShelf</h1>
+        <nav>
+            <a href="/">Home</a>
+            <a href="{{ url_for('register') }}">Register</a>
+            <a href="{{ url_for('login') }}">Login</a>
+            <a href="{{ url_for('cart') }}">Cart</a> <!-- Cart link in Navbar -->
+            <a href="{{ url_for('logout') }}">Logout</a>
+        </nav>
+    </header>
+
+    <!-- <div class="cart-items">
+        {% if cart_items %}
+            <ul>
+                {% for item in cart_items %}
+                    <li>
+                        <span>{{ item.name }}</span>
+                        <span>${{ item.price }}</span>
+                        <span>Quantity: {{ item.quantity }}</span>
+                        <a href="/remove_from_cart/{{ item.book_id }}">Remove</a>
+                    </li>
+                {% endfor %}
+            </ul>
+            <a href="/checkout/{{ user_id }}">Proceed to Checkout</a>
+        {% else %}
+        {% endif %}
+    </div> -->
+
+    <div class="book-list">
+        {% for book in books %}
+        <div class="book-card">
+            <img 
+                src="{{ url_for('static', filename='images/' + book.image) }}" 
+                alt="{{ book.name }} Image" 
+                class="book-image"
+            >
+            <h3>{{ book.name }}</h3>
+            <p>Rs. {{ book.price }}</p>
+            <p class="author">{{ book.author }}</p> 
+            <a href="/add_to_cart/{{ book.book_id }}">Add to Cart</a>
+        </div>
+        {% endfor %}
+    </div>
+
+    <footer>
+        <div class="footer-container">
+            <!-- About Section -->
+            <div class="footer-about">
+                <h3>About Bookshelf</h3>
+                <p>Your go-to platform for a seamless book shopping experience. Discover, read, and enjoy!</p>
+            </div>
+    
+            <!-- Social Media Links -->
+            <div class="footer-social">
+                <h3>Follow Us</h3>
+                <div class="social-icons">
+                    <a href="#" class="fab fa-facebook-f" target="_blank"></a>
+                    <a href="#" class="fab fa-twitter" target="_blank"></a>
+                    <a href="#" class="fab fa-instagram" target="_blank"></a>
+                    <a href="#" class="fab fa-linkedin-in" target="_blank"></a>
+                </div>
+            </div>
+    
+            <!-- Subscribe Section -->
+            <div class="footer-subscribe">
+                <h3>Subscribe to Our Newsletter</h3>
+                <p>Stay updated with the latest book collections and offers!</p>
+                <form>
+                    <input type="email" placeholder="Enter your email" required />
+                    <button type="submit">Subscribe</button>
+                </form>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Bookshelf. All rights reserved.</p>
+        </div>
+    </footer>
+    
+
+    <!-- <footer>
+        <div class="container">
+            <p>&copy; 2024 Bookshelf. All rights reserved.</p>
+            <div class="social-icons">
+                <a href="#" class="fab fa-facebook-f" target="_blank"></a>
+                <a href="#" class="fab fa-twitter" target="_blank"></a>
+                <a href="#" class="fab fa-instagram" target="_blank"></a>
+            </div>
+        </div>
+    </footer> -->
+    
+</body>
+</html>

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Cart</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <style>
+        /* static/styles.css */
+
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+    }
+
+    .navbar {
+        background-color: #333;
+        padding: 10px;
+        text-align: center;
+    }
+
+    .navbar a {
+        color: white;
+        padding: 10px 20px;
+        text-decoration: none;
+        margin: 0 10px;
+    }
+
+    .navbar a:hover {
+        background-color: #575757;
+    }
+
+    .cart-container {
+        width: 80%;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: white;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .cart-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .cart-table th, .cart-table td {
+        padding: 10px;
+        text-align: left;
+    }
+
+    .cart-table th {
+        background-color: #333;
+        color: white;
+    }
+
+    .cart-table tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    .remove-btn {
+        color: red;
+        text-decoration: none;
+    }
+
+    .remove-btn:hover {
+        text-decoration: underline;
+    }
+
+    .checkout {
+        margin-top: 20px;
+        text-align: right;
+    }
+
+    .checkout-btn {
+        background-color: #333;
+        color: white;
+        padding: 10px 20px;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    .checkout-btn:hover {
+        background-color: #575757;
+    }
+
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a href="/">Home</a>
+        <a href="{{ url_for('register') }}">Register</a>
+        <a href="{{ url_for('login') }}">Login</a>
+        <a href="{{ url_for('cart') }}">Cart</a> <!-- Cart link in Navbar -->
+        <a href="{{ url_for('logout') }}">Logout</a>
+    </div>
+
+    <div class="cart-container">
+        <h1>Your Shopping Cart</h1>
+
+        {% if cart_items %}
+            <table class="cart-table">
+                <thead>
+                    <tr>
+                        <th>Book Title</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Total Price</th>
+                        <th>Remove</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% set total_price = 0 %}
+                    {% for item in cart_items %}
+                        <tr>
+                            <td>{{ item['name'] }}</td>
+                            <td>${{ item['price'] }}</td>
+                            <td>{{ item['quantity'] }}</td>
+                            <td>${{ item['total_price'] }}</td>
+                            <td>
+                                <a href="{{ url_for('remove_from_cart_route', book_id=item['book_id']) }}" class="remove-btn">Remove</a>
+                            </td>
+                        </tr>
+                        <!-- {% set total_price = total_price + (item.price * item.quantity) %} -->
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <div class="checkout">
+                <!-- <h3>Total: ${{ total_price }}</h3> -->
+                <a href="{{ url_for('checkout_route') }}" class="checkout-btn">Checkout</a>
+            </div>
+        {% else %}
+            <p>Your cart is empty.</p>
+        {% endif %}
+    </div>
+</body>
+</html>
