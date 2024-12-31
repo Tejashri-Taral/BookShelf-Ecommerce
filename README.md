@@ -21,3 +21,16 @@
 
 - **Purchase Tracking**
   - Keeps a record of purchases and updates the database.
+
+---
+
+## Tools Used
+
+### Frontend
+- **HTML**: To create the web pages.
+- **CSS**: To style the website.
+- **JavaScript**: For interactive features.
+
+### Backend
+- **Python (Flask)**: For server-side processing.
+- **SQLite**: To store user, book, and purchase data.
